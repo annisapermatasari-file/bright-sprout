@@ -1,0 +1,6 @@
+import Link from "next/link";
+import { RegisterForm } from "@/components/auth/RegisterForm";
+
+export default function RegisterPage() {
+  return <main className="auth-shell"><section className="auth-art auth-art-register"><Link href="/" className="brand auth-brand"><span className="brand-mark">✦</span><span>Bright<span>Sprout</span></span></Link><div className="auth-art-copy"><span className="parent-kicker">TEMPAT YANG BAIK UNTUK MEMULAI · ✦</span><h1>Tumbuhkan rasa<br />suka <em>belajar.</em></h1><p>Satu akun keluarga. Banyak momen kecil untuk menemukan hal baru.</p></div><div className="auth-quote"><span>“</span><p>Rasanya bukan seperti PR, tetapi seperti kebiasaan kecil setiap hari.</p><small>— Orang tua BrightSprout</small></div></section><section className="auth-form-panel"><div className="auth-form-inner"><div className="auth-mobile-brand"><Link href="/" className="brand"><span className="brand-mark">✦</span><span>Bright<span>Sprout</span></span></Link></div><span className="parent-kicker">MULAI DI SINI</span><h2>Buat akun keluarga</h2><p className="auth-intro">Siapkan ruang belajar keluarga dalam waktu kurang dari satu menit.</p><RegisterForm /><p className="auth-switch">Sudah punya akun? <Link href="/login">Masuk ↗</Link></p></div></section></main>;
+}
