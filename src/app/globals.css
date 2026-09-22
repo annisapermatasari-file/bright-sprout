@@ -380,6 +380,7 @@ h1,h2,h3,p { text-wrap:balance; }
 .hero-subtitle { max-width:505px; color:var(--bs-muted); font-size:17px; line-height:1.65; }
 .hero-actions { display:flex; align-items:center; gap:15px; margin-top:32px; }
 .trust-row { display:flex; align-items:center; gap:10px; margin-top:38px; color:var(--bs-muted); font-size:11px; font-weight:650; }
+.hero-lang-toggle { display:inline-flex; margin-bottom:18px; }
 .hero-pricing { display:flex; gap:16px; margin-top:26px; flex-wrap:wrap; }
 .hero-pricing-card { position:relative; display:flex; flex-direction:column; gap:5px; min-width:190px; padding:18px 22px; border:2px solid var(--bs-line); border-radius:18px; background:#fff; text-decoration:none; color:var(--bs-ink); box-shadow:0 8px 0 rgba(32,37,45,.06); transition:transform 150ms ease-out, box-shadow 150ms ease-out; }
 .hero-pricing-card:hover { transform:translateY(-3px); box-shadow:0 12px 0 rgba(32,37,45,.08); }
