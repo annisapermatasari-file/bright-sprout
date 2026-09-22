@@ -59,11 +59,13 @@ export function HeroCopy({ primaryHref, loggedIn }: { primaryHref: string; logge
 
   return (
     <div className="hero-copy">
-      <div className="hero-lang-toggle language-toggle" aria-label={language === "id" ? "Pilih bahasa" : "Choose language"}>
-        <button type="button" className={language === "id" ? "active" : ""} onClick={() => setLanguage("id")}>ID</button>
-        <button type="button" className={language === "en" ? "active" : ""} onClick={() => setLanguage("en")}>EN</button>
+      <div className="hero-kicker-row">
+        <div className="kicker"><span className="kicker-star">✦</span> {t.kicker}</div>
+        <div className="hero-lang-toggle language-toggle" aria-label={language === "id" ? "Pilih bahasa" : "Choose language"}>
+          <button type="button" className={language === "id" ? "active" : ""} onClick={() => setLanguage("id")}>ID</button>
+          <button type="button" className={language === "en" ? "active" : ""} onClick={() => setLanguage("en")}>EN</button>
+        </div>
       </div>
-      <div className="kicker"><span className="kicker-star">✦</span> {t.kicker}</div>
       <h1>{t.titleLine1}<br /><em>{t.titleLine2}</em></h1>
       <p className="hero-subtitle">{t.subtitle}</p>
       <div className="hero-actions">
