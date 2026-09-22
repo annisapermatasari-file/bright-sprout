@@ -95,6 +95,31 @@ function matchAmountQuestion(
   };
 }
 
+/** DRAG_MATCH: same shape as countSelectQuestion, phrased as a drag instruction. */
+function dragMatchQuestion(seedIndex: number, emoji: string, count: number, max: number, skill: Skill) {
+  const { options, correctOptionId } = buildOptions(
+    String(count),
+    distractors(count, max).map(String),
+    seedIndex,
+  );
+  return {
+    skill,
+    prompt: `${emoji.repeat(count)}\nSeret ke kotak dengan jumlah yang tepat!`,
+    options,
+    correctAnswer: { optionId: correctOptionId },
+  };
+}
+
+/** TRACE_NUMBER: a single always-correct option — finishing the trace gesture is the answer. */
+function traceNumberQuestion(count: number, skill: Skill) {
+  return {
+    skill,
+    prompt: `Jiplak angka ${count}.`,
+    options: [{ id: "a", label: String(count) }],
+    correctAnswer: { optionId: "a" },
+  };
+}
+
 /** Missing-number sequence styled for the worksheet-inspired ordering lesson. */
 function sequenceQuestion(seedIndex: number, missing: number, sequence: number[], skill: Skill) {
   const { options, correctOptionId } = buildOptions(
@@ -189,7 +214,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
       {
         title: "Cocokkan Jumlah yang Sama",
         description: "Menemukan kumpulan benda dengan jumlah yang sama.",
-        activityType: "MULTIPLE_CHOICE",
+        activityType: "SAME_AMOUNT",
         skill: "MATCH_QUANTITY",
         emoji: "🍎",
         emoji2: "🍊",
@@ -273,6 +298,47 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
         max: 10,
         counts: [2, 5, 8, 4, 7],
         sequence: true,
+      },
+    ],
+  },
+  {
+    title: "Cara Baru Berlatih",
+    lessons: [
+      {
+        title: "Ketik Jumlahnya",
+        description: "Hitung bendanya, lalu ketik angkanya di keypad.",
+        activityType: "COUNT_INPUT",
+        skill: "COUNT_1_10",
+        emoji: "🧁",
+        max: 10,
+        counts: [2, 4, 5, 7, 9],
+      },
+      {
+        title: "Lingkari Angka yang Benar",
+        description: "Hitung bendanya, lalu lingkari angka yang tepat.",
+        activityType: "COUNT_CIRCLE",
+        skill: "COUNT_1_10",
+        emoji: "🎨",
+        max: 10,
+        counts: [1, 3, 6, 8, 10],
+      },
+      {
+        title: "Seret ke Kotak yang Tepat",
+        description: "Seret kumpulan benda ke kotak dengan angka yang cocok.",
+        activityType: "DRAG_MATCH",
+        skill: "COUNT_1_10",
+        emoji: "🦋",
+        max: 10,
+        counts: [2, 3, 5, 7, 9],
+      },
+      {
+        title: "Jiplak Angka",
+        description: "Jiplak setiap angka dengan jari sampai selesai.",
+        activityType: "TRACE_NUMBER",
+        skill: "NUMBER_RECOGNITION_1_10",
+        emoji: "✏️",
+        max: 10,
+        counts: [1, 2, 3, 4, 5],
       },
     ],
   },
@@ -599,7 +665,7 @@ async function main() {
             )
           : lessonDef.activityType === "NUMBER_RECOGNITION"
             ? numberRecognitionQuestion(globalQuestionIndex, lessonDef.emoji, count, lessonDef.max, lessonDef.skill)
-            : lessonDef.activityType === "MULTIPLE_CHOICE"
+            : lessonDef.activityType === "MULTIPLE_CHOICE" || lessonDef.activityType === "SAME_AMOUNT"
               ? matchAmountQuestion(
                   globalQuestionIndex,
                   lessonDef.emoji,
@@ -608,7 +674,11 @@ async function main() {
                   lessonDef.max,
                   lessonDef.skill,
                 )
-              : countSelectQuestion(globalQuestionIndex, lessonDef.emoji, count, lessonDef.max, lessonDef.skill);
+              : lessonDef.activityType === "DRAG_MATCH"
+                ? dragMatchQuestion(globalQuestionIndex, lessonDef.emoji, count, lessonDef.max, lessonDef.skill)
+                : lessonDef.activityType === "TRACE_NUMBER"
+                  ? traceNumberQuestion(count, lessonDef.skill)
+                  : countSelectQuestion(globalQuestionIndex, lessonDef.emoji, count, lessonDef.max, lessonDef.skill);
         globalQuestionIndex++;
 
         await db.question.upsert({

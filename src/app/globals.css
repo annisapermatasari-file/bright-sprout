@@ -504,3 +504,44 @@ body{background:#fffaf3;color:#2b1f1a}
 @media(max-width:760px){.checkout-page{padding:20px 20px 50px}.checkout-page-top{align-items:flex-start}.checkout-secure-pill{font-size:9px}.checkout-layout{grid-template-columns:1fr;gap:30px;margin-top:55px}.checkout-intro h1{font-size:45px}.checkout-card,.checkout-success{padding:23px}.package-link{font-size:12px}}
 
 .plan-picker{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}.plan-choice{min-height:116px;padding:13px;text-align:left;border:2px solid #e6cdb5;border-radius:16px;background:rgba(255,253,248,.8);color:#2b1f1a;cursor:pointer}.plan-choice:hover{border-color:#8d7bff;transform:translateY(-1px)}.plan-choice.active{border-color:#ff6f61;background:#fff1c9;box-shadow:0 4px 0 rgba(255,111,97,.13)}.plan-choice-top{display:flex;justify-content:space-between;gap:10px}.plan-choice-top strong{color:#138f83;font-size:16px}.plan-choice b,.plan-choice small{display:block}.plan-choice b{margin-top:12px;font-size:16px}.plan-choice small{margin-top:3px;color:#6a5b53;font-size:11px}@media(max-width:760px){.plan-picker{grid-template-columns:1fr}.plan-choice{min-height:92px}.plan-choice b{margin-top:8px}}
+
+/* New activity types: COUNT_INPUT, COUNT_CIRCLE, SAME_AMOUNT, TRACE_NUMBER, DRAG_MATCH */
+.number-keypad { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+.number-key { display: flex; align-items: center; justify-content: center; width: 4.2rem; height: 4.2rem; border-radius: 1.1rem; border: 2px solid var(--border); background: var(--surface); font-size: 2rem; font-weight: 800; font-variant-numeric: tabular-nums; cursor: pointer; }
+.number-key-correct { border-color: var(--success); background: color-mix(in srgb, var(--success) 15%, var(--surface)); }
+.number-key-wrong { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 15%, var(--surface)); }
+
+.circle-options { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+.circle-option { display: flex; align-items: center; justify-content: center; width: 4.6rem; height: 4.6rem; border-radius: 50%; border: 3px solid transparent; background: var(--surface); box-shadow: 0 0 0 2px var(--border) inset; font-size: 1.8rem; font-weight: 800; cursor: pointer; }
+.circle-option-correct { border-color: var(--success); box-shadow: 0 0 0 3px var(--success); }
+.circle-option-wrong { border-color: var(--danger); box-shadow: 0 0 0 3px var(--danger); }
+
+.same-amount-compare { display: flex; align-items: center; justify-content: center; gap: 1.25rem; flex-wrap: wrap; width: 100%; }
+.same-amount-reference { display: flex; align-items: center; justify-content: center; min-width: 7rem; min-height: 7rem; padding: 0.75rem; border-radius: 1.5rem; border: 2px dashed var(--border); background: var(--surface); }
+.same-amount-arrow { font-size: 1.75rem; font-weight: 800; color: var(--muted); }
+.same-amount-candidates { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+.same-amount-card { display: flex; align-items: center; justify-content: center; min-width: 6rem; min-height: 6rem; padding: 0.5rem; border-radius: 1.25rem; border: 2px solid var(--border); background: var(--surface); cursor: pointer; }
+.same-amount-card-correct { border-color: var(--success); background: color-mix(in srgb, var(--success) 12%, var(--surface)); }
+.same-amount-card-wrong { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 12%, var(--surface)); }
+
+.trace-board { position: relative; width: min(100%, 20rem); aspect-ratio: 1; border-radius: 1.5rem; border: 2px solid var(--border); background: var(--surface); touch-action: none; }
+.trace-board-done { border-color: var(--success); }
+.trace-svg { width: 100%; height: 100%; cursor: crosshair; }
+.trace-numeral-outline { font-size: 150px; font-weight: 800; fill: none; stroke: var(--border); stroke-width: 2; stroke-dasharray: 6 6; }
+.trace-stroke { fill: none; stroke: var(--primary); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+.trace-check { position: absolute; top: 0.5rem; right: 0.5rem; display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--success); color: white; font-size: 1.25rem; }
+.trace-clear-button { border: 0; background: transparent; color: var(--muted); font-size: 0.85rem; font-weight: 700; text-decoration: underline; cursor: pointer; }
+
+.drag-match-board { display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+.drag-chip { display: flex; align-items: center; justify-content: center; min-width: 6rem; min-height: 6rem; padding: 0.5rem; border-radius: 1.5rem; border: 3px solid var(--primary); background: var(--surface); cursor: pointer; transition: transform 150ms var(--spring-out); }
+.drag-chip-picked { transform: translateY(-6px) scale(1.05); box-shadow: 0 10px 18px rgba(0,0,0,.15); }
+.drag-targets { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+.drag-target { display: flex; align-items: center; justify-content: center; min-width: 5.5rem; min-height: 5.5rem; padding: 0.5rem; border-radius: 1.25rem; border: 2px dashed var(--border); background: var(--surface); cursor: pointer; }
+.drag-target-ready { border-style: solid; border-color: var(--primary); }
+.drag-target-correct { border-style: solid; border-color: var(--success); background: color-mix(in srgb, var(--success) 12%, var(--surface)); }
+.drag-target-wrong { border-style: solid; border-color: var(--danger); background: color-mix(in srgb, var(--danger) 12%, var(--surface)); }
+@media (max-width: 640px) {
+  .number-key { width: 3.6rem; height: 3.6rem; font-size: 1.6rem; }
+  .circle-option { width: 4rem; height: 4rem; font-size: 1.5rem; }
+  .drag-chip, .drag-target { min-width: 4.6rem; min-height: 4.6rem; }
+}
