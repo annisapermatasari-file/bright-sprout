@@ -29,6 +29,8 @@ const SKILLS = [
   "VISUAL_COUNTING",
   "SCIENCE_BASICS",
   "VOCABULARY_EN",
+  "COLOR_RECOGNITION",
+  "SHAPE_RECOGNITION",
 ] as const;
 
 function slugify(title: string): string {

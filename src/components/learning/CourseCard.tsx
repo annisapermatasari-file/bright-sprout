@@ -9,6 +9,7 @@ const SUBJECT_STYLES: Record<string, { tone: string; icon: string; label: string
   MATH: { tone: "coral", icon: "🔢", label: "MATEMATIKA" },
   SCIENCE: { tone: "teal", icon: "🔬", label: "SAINS" },
   LANGUAGE: { tone: "purple", icon: "🗣️", label: "BAHASA INGGRIS" },
+  COLORS_SHAPES: { tone: "yellow", icon: "🎨", label: "WARNA & BENTUK" },
 };
 const FALLBACK_STYLE = { tone: "yellow", icon: "✦", label: "PETUALANGAN" };
 

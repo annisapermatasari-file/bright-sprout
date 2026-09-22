@@ -36,6 +36,7 @@ enum CourseSubject {
   MATH
   SCIENCE
   LANGUAGE
+  COLORS_SHAPES
 }
 
 enum ContentStatus {
@@ -73,6 +74,8 @@ enum Skill {
   VISUAL_COUNTING
   SCIENCE_BASICS
   VOCABULARY_EN
+  COLOR_RECOGNITION
+  SHAPE_RECOGNITION
 }
 
 enum EnrollmentStatus {

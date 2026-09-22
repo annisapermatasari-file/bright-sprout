@@ -24,4 +24,6 @@ export const SKILL_LABELS: Record<Skill, string> = {
   VISUAL_COUNTING: "Berhitung Visual",
   SCIENCE_BASICS: "Sains Dasar",
   VOCABULARY_EN: "Kosa Kata Inggris",
+  COLOR_RECOGNITION: "Mengenal Warna",
+  SHAPE_RECOGNITION: "Mengenal Bentuk",
 };

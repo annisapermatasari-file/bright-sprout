@@ -558,6 +558,70 @@ async function main() {
     questions: scienceQuestions,
   });
 
+  // --- Warna & Bentuk: one course, two lessons (colors, then shapes) ---
+  const colorShapeCourse = await db.course.upsert({
+    where: { slug: "warna-dan-bentuk" },
+    update: { title: "Warna & Bentuk", subject: "COLORS_SHAPES", status: PUBLISHED },
+    create: {
+      slug: "warna-dan-bentuk",
+      title: "Warna & Bentuk",
+      description: "Mengenal warna-warni dan bentuk di sekitar kita.",
+      subject: "COLORS_SHAPES",
+      status: PUBLISHED,
+    },
+  });
+  await db.enrollment.upsert({
+    where: { childId_courseId: { childId: child.id, courseId: colorShapeCourse.id } },
+    update: {},
+    create: { childId: child.id, courseId: colorShapeCourse.id },
+  });
+  const colorShapeModule = await db.courseModule.upsert({
+    where: { courseId_position: { courseId: colorShapeCourse.id, position: 1 } },
+    update: { title: "Warna & Bentuk", status: PUBLISHED },
+    create: { courseId: colorShapeCourse.id, title: "Warna & Bentuk", position: 1, status: PUBLISHED },
+  });
+
+  const colorQuestions: SimpleQuestionDef[] = [
+    { prompt: "🟥\nWarna apa ini?", correct: "Merah", distractors: ["Biru", "Hijau"] },
+    { prompt: "🟦\nWarna apa ini?", correct: "Biru", distractors: ["Kuning", "Ungu"] },
+    { prompt: "🟩\nWarna apa ini?", correct: "Hijau", distractors: ["Oranye", "Merah muda"] },
+    { prompt: "🟨\nWarna apa ini?", correct: "Kuning", distractors: ["Cokelat", "Hitam"] },
+    { prompt: "🟪\nWarna apa ini?", correct: "Ungu", distractors: ["Abu-abu", "Putih"] },
+  ];
+  const shapeQuestions: SimpleQuestionDef[] = [
+    { prompt: "◯\nBentuk apa ini?", correct: "Lingkaran", distractors: ["Segitiga", "Persegi"] },
+    { prompt: "△\nBentuk apa ini?", correct: "Segitiga", distractors: ["Bintang", "Lingkaran"] },
+    { prompt: "□\nBentuk apa ini?", correct: "Persegi", distractors: ["Hati", "Lingkaran"] },
+    { prompt: "★\nBentuk apa ini?", correct: "Bintang", distractors: ["Persegi", "Segitiga"] },
+    { prompt: "♥\nBentuk apa ini?", correct: "Hati", distractors: ["Bintang", "Lingkaran"] },
+  ];
+
+  async function seedColorShapeLesson(position: number, title: string, description: string, skill: Skill, questions: SimpleQuestionDef[]) {
+    const lesson = await db.lesson.upsert({
+      where: { moduleId_position: { moduleId: colorShapeModule.id, position } },
+      update: { title, description, status: PUBLISHED },
+      create: { moduleId: colorShapeModule.id, title, description, position, status: PUBLISHED },
+    });
+    const activity = await db.activity.upsert({
+      where: { lessonId_position: { lessonId: lesson.id, position: 1 } },
+      update: { type: "MULTIPLE_CHOICE", title, status: PUBLISHED },
+      create: { lessonId: lesson.id, type: "MULTIPLE_CHOICE", title, position: 1, difficulty: "EASY", status: PUBLISHED },
+    });
+    for (let q = 0; q < questions.length; q++) {
+      const def = questions[q];
+      const { options, correctOptionId } = buildOptions(def.correct, def.distractors, globalQuestionIndex);
+      globalQuestionIndex += 1;
+      await db.question.upsert({
+        where: { activityId_position: { activityId: activity.id, position: q + 1 } },
+        update: { skill, prompt: def.prompt, options, correctAnswer: { optionId: correctOptionId }, status: PUBLISHED },
+        create: { activityId: activity.id, skill, prompt: def.prompt, position: q + 1, options, correctAnswer: { optionId: correctOptionId }, status: PUBLISHED },
+      });
+    }
+  }
+
+  await seedColorShapeLesson(1, "Kenali Warna", "Menebak nama warna dari kotak warna.", "COLOR_RECOGNITION", colorQuestions);
+  await seedColorShapeLesson(2, "Kenali Bentuk", "Menebak nama bentuk dari gambar.", "SHAPE_RECOGNITION", shapeQuestions);
+
   await seedSimpleCourse({
     slug: "kosa-kata-inggris",
     title: "Kosa Kata Inggris",

@@ -9,6 +9,7 @@ const SUBJECT_GROUPS = [
   { subject: "MATH", label: "Matematika", icon: "🧮" },
   { subject: "SCIENCE", label: "Sains", icon: "🔬" },
   { subject: "LANGUAGE", label: "Bahasa Inggris", icon: "🗣️" },
+  { subject: "COLORS_SHAPES", label: "Warna & Bentuk", icon: "🎨" },
 ] as const;
 
 export default async function LearnPage() {
