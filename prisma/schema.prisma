@@ -449,3 +449,34 @@ model Subscription {
 
   @@map("subscriptions")
 }
+
+// ---------------------------------------------------------------------------
+// Public checkout (DOKU payment gateway)
+// ---------------------------------------------------------------------------
+
+enum CheckoutOrderStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  EXPIRED
+}
+
+// One row per checkout attempt against DOKU, created before redirecting the
+// customer to DOKU's hosted payment page (payment.url) and updated by the
+// DOKU HTTP Notification (see src/app/api/doku/notification/route.ts) once
+// the payment actually settles. invoiceNumber is what ties the two together.
+model CheckoutOrder {
+  id             String              @id @default(cuid())
+  invoiceNumber  String              @unique
+  planId         String
+  amount         Int
+  customerEmail  String
+  status         CheckoutOrderStatus @default(PENDING)
+  dokuTokenId    String?
+  dokuPaymentUrl String?
+  paidAt         DateTime?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  @@map("checkout_orders")
+}
