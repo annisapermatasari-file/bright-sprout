@@ -346,11 +346,12 @@ async function main() {
 
   const course = await db.course.upsert({
     where: { slug: "counting-fundamentals" },
-    update: { title: "Dasar Berhitung", status: PUBLISHED },
+    update: { title: "Dasar Berhitung", subject: "MATH", status: PUBLISHED },
     create: {
       slug: "counting-fundamentals",
       title: "Dasar Berhitung",
       description: "Kursus dasar berhitung untuk anak usia dini.",
+      subject: "MATH",
       status: PUBLISHED,
     },
   });
@@ -359,6 +360,138 @@ async function main() {
     where: { childId_courseId: { childId: child.id, courseId: course.id } },
     update: {},
     create: { childId: child.id, courseId: course.id },
+  });
+
+  // Shared counter for buildOptions()'s deterministic answer rotation,
+  // used both by the Sains/Bahasa questions below and the numeric Math
+  // lessons further down.
+  let globalQuestionIndex = 0;
+
+  // --- Sains and Bahasa Inggris courses: separate subjects from Math,
+  // using plain-text MULTIPLE_CHOICE questions (not the numeric counting
+  // helpers above, since these aren't "count the emoji" questions). ---
+  type SimpleQuestionDef = { prompt: string; correct: string; distractors: string[] };
+
+  const scienceQuestions: SimpleQuestionDef[] = [
+    { prompt: "Mana yang termasuk tumbuhan?", correct: "Daun", distractors: ["Batu", "Sepatu"] },
+    { prompt: "Apa yang kita perlukan untuk bernapas?", correct: "Udara", distractors: ["Air minum", "Apel"] },
+    { prompt: "Hewan mana yang bermula sebagai ulat?", correct: "Kupu-kupu", distractors: ["Anjing", "Ikan"] },
+  ];
+
+  const languageQuestions: SimpleQuestionDef[] = [
+    { prompt: 'Apa arti kata "cat"?', correct: "Kucing", distractors: ["Buku", "Matahari"] },
+    { prompt: 'Apa lawan kata "big"?', correct: "Kecil", distractors: ["Cepat", "Biru"] },
+    { prompt: 'Kata mana yang berarti "air"?', correct: "Water", distractors: ["Window", "Winter"] },
+  ];
+
+  async function seedSimpleCourse(options: {
+    slug: string;
+    title: string;
+    description: string;
+    subject: "SCIENCE" | "LANGUAGE";
+    moduleTitle: string;
+    lessonTitle: string;
+    lessonDescription: string;
+    skill: Skill;
+    questions: SimpleQuestionDef[];
+  }) {
+    const simpleCourse = await db.course.upsert({
+      where: { slug: options.slug },
+      update: { title: options.title, subject: options.subject, status: PUBLISHED },
+      create: {
+        slug: options.slug,
+        title: options.title,
+        description: options.description,
+        subject: options.subject,
+        status: PUBLISHED,
+      },
+    });
+
+    await db.enrollment.upsert({
+      where: { childId_courseId: { childId: child.id, courseId: simpleCourse.id } },
+      update: {},
+      create: { childId: child.id, courseId: simpleCourse.id },
+    });
+
+    const simpleModule = await db.courseModule.upsert({
+      where: { courseId_position: { courseId: simpleCourse.id, position: 1 } },
+      update: { title: options.moduleTitle, status: PUBLISHED },
+      create: { courseId: simpleCourse.id, title: options.moduleTitle, position: 1, status: PUBLISHED },
+    });
+
+    const simpleLesson = await db.lesson.upsert({
+      where: { moduleId_position: { moduleId: simpleModule.id, position: 1 } },
+      update: { title: options.lessonTitle, description: options.lessonDescription, status: PUBLISHED },
+      create: {
+        moduleId: simpleModule.id,
+        title: options.lessonTitle,
+        description: options.lessonDescription,
+        position: 1,
+        status: PUBLISHED,
+      },
+    });
+
+    const simpleActivity = await db.activity.upsert({
+      where: { lessonId_position: { lessonId: simpleLesson.id, position: 1 } },
+      update: { type: "MULTIPLE_CHOICE", title: options.lessonTitle, status: PUBLISHED },
+      create: {
+        lessonId: simpleLesson.id,
+        type: "MULTIPLE_CHOICE",
+        title: options.lessonTitle,
+        position: 1,
+        difficulty: "EASY",
+        status: PUBLISHED,
+      },
+    });
+
+    for (let q = 0; q < options.questions.length; q++) {
+      const def = options.questions[q];
+      const { options: builtOptions, correctOptionId } = buildOptions(def.correct, def.distractors, globalQuestionIndex);
+      globalQuestionIndex += 1;
+      await db.question.upsert({
+        where: { activityId_position: { activityId: simpleActivity.id, position: q + 1 } },
+        update: {
+          skill: options.skill,
+          prompt: def.prompt,
+          options: builtOptions,
+          correctAnswer: { optionId: correctOptionId },
+          status: PUBLISHED,
+        },
+        create: {
+          activityId: simpleActivity.id,
+          skill: options.skill,
+          prompt: def.prompt,
+          position: q + 1,
+          options: builtOptions,
+          correctAnswer: { optionId: correctOptionId },
+          status: PUBLISHED,
+        },
+      });
+    }
+  }
+
+  await seedSimpleCourse({
+    slug: "sains-lihat-lebih-dekat",
+    title: "Sains: Lihat Lebih Dekat",
+    description: "Mengenal alam sekitar lewat pertanyaan sederhana.",
+    subject: "SCIENCE",
+    moduleTitle: "Pengamatan Sains",
+    lessonTitle: "Kenali Alam Sekitar",
+    lessonDescription: "Pertanyaan ringan seputar tumbuhan, hewan, dan tubuh kita.",
+    skill: "SCIENCE_BASICS",
+    questions: scienceQuestions,
+  });
+
+  await seedSimpleCourse({
+    slug: "kosa-kata-inggris",
+    title: "Kosa Kata Inggris",
+    description: "Kata-kata bahasa Inggris dasar untuk anak-anak.",
+    subject: "LANGUAGE",
+    moduleTitle: "Jejak Kata",
+    lessonTitle: "Temukan Kata yang Tepat",
+    lessonDescription: "Mengenal arti dan lawan kata sederhana dalam bahasa Inggris.",
+    skill: "VOCABULARY_EN",
+    questions: languageQuestions,
   });
 
   // --- Phase 10: a SCHOOL organization with a teacher, a class, and a
@@ -414,8 +547,6 @@ async function main() {
       create: { classId: classroom.id, childId: student.id },
     });
   }
-
-  let globalQuestionIndex = 0;
 
   for (let m = 0; m < moduleDefs.length; m++) {
     const moduleDef = moduleDefs[m];

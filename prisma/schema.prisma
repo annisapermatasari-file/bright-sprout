@@ -32,6 +32,12 @@ enum AgeBand {
   AGE_9_PLUS
 }
 
+enum CourseSubject {
+  MATH
+  SCIENCE
+  LANGUAGE
+}
+
 enum ContentStatus {
   DRAFT
   PUBLISHED
@@ -65,6 +71,8 @@ enum Skill {
   NUMBER_RECOGNITION_1_10
   MATCH_QUANTITY
   VISUAL_COUNTING
+  SCIENCE_BASICS
+  VOCABULARY_EN
 }
 
 enum EnrollmentStatus {
@@ -218,6 +226,7 @@ model Course {
   slug        String        @unique
   title       String
   description String?
+  subject     CourseSubject @default(MATH)
   status      ContentStatus @default(DRAFT)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt

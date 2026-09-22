@@ -16,7 +16,7 @@ export async function listPublishedCourses() {
   return db.course.findMany({
     where: { status: "PUBLISHED" },
     orderBy: { createdAt: "asc" },
-    select: { id: true, title: true, description: true },
+    select: { id: true, title: true, description: true, subject: true },
   });
 }
 
