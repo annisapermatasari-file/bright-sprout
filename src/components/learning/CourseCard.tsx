@@ -2,10 +2,10 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const QUEST_STYLES = [
-  { tone: "coral", icon: "✦", label: "SUNNY START" },
-  { tone: "purple", icon: "◒", label: "NUMBER FOREST" },
-  { tone: "teal", icon: "✳", label: "PATTERN BAY" },
-  { tone: "yellow", icon: "◆", label: "STAR TRAIL" },
+  { tone: "coral", icon: "✦", label: "AWAL CERIA" },
+  { tone: "purple", icon: "◒", label: "HUTAN ANGKA" },
+  { tone: "teal", icon: "✳", label: "TELUK POLA" },
+  { tone: "yellow", icon: "◆", label: "JEJAK BINTANG" },
 ] as const;
 
 export function CourseCard({
@@ -24,9 +24,9 @@ export function CourseCard({
       <div className="quest-card-top"><span className="quest-label">{style.label}</span><span className="quest-icon" aria-hidden>{style.icon}</span></div>
       <div className="quest-card-body">
         <h2>{course.title}</h2>
-        <p>{course.description ?? "A tiny adventure full of friendly challenges."}</p>
-        <div className="quest-meta"><span>{isEnrolled ? "↗ Continue your quest" : "✦ New adventure"}</span><span>10 min</span></div>
-        <Link href={`/learn/courses/${course.id}`} className="quest-button">{isEnrolled ? "Keep going" : "Start quest"}<span>↗</span></Link>
+        <p>{course.description ?? "Petualangan kecil penuh tantangan seru."}</p>
+        <div className="quest-meta"><span>{isEnrolled ? "↗ Lanjutkan petualangan" : "✦ Petualangan baru"}</span><span>10 menit</span></div>
+        <Link href={`/learn/courses/${course.id}`} className="quest-button">{isEnrolled ? "Lanjutkan" : "Mulai petualangan"}<span>↗</span></Link>
       </div>
     </article>
   );

@@ -128,7 +128,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
     title: "Mengenal Berhitung",
     lessons: [
       {
-        title: "Count and Match",
+        title: "Hitung dan Cocokkan",
         description: "Menghitung kumpulan benda dan mencocokkan dengan angka.",
         activityType: "COUNT_SELECT",
         skill: "COUNT_1_5",
@@ -137,7 +137,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
         counts: [1, 2, 3, 4, 5],
       },
       {
-        title: "Trace and Match",
+        title: "Jiplak dan Cocokkan",
         description: "Latihan mengenali jumlah sambil menjiplak angka.",
         activityType: "COUNT_SELECT",
         skill: "COUNT_1_5",
@@ -146,7 +146,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
         counts: [2, 3, 4, 5, 1],
       },
       {
-        title: "Count and Circle",
+        title: "Hitung dan Lingkari",
         description: "Menghitung benda lalu memilih jumlah yang tepat.",
         activityType: "COUNT_SELECT",
         skill: "COUNT_1_10",
@@ -155,7 +155,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
         counts: [3, 5, 7, 8, 10],
       },
       {
-        title: "Fruits Counting",
+        title: "Berhitung Buah",
         description: "Menghitung buah-buahan dalam kelompok kecil.",
         activityType: "COUNT_SELECT",
         skill: "COUNT_1_10",
@@ -164,7 +164,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
         counts: [2, 4, 6, 8, 9],
       },
       {
-        title: "Count the Fruits",
+        title: "Menghitung Buah",
         description: "Latihan lanjutan menghitung buah-buahan.",
         activityType: "COUNT_SELECT",
         skill: "COUNT_1_10",
@@ -178,7 +178,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
     title: "Latihan Berhitung",
     lessons: [
       {
-        title: "Counting Practice",
+        title: "Latihan Berhitung",
         description: "Latihan berhitung campuran untuk memperkuat pemahaman.",
         activityType: "COUNT_SELECT",
         skill: "COUNT_1_10",
@@ -187,7 +187,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
         counts: [2, 4, 5, 7, 9],
       },
       {
-        title: "Match the Same Amount",
+        title: "Cocokkan Jumlah yang Sama",
         description: "Menemukan kumpulan benda dengan jumlah yang sama.",
         activityType: "MULTIPLE_CHOICE",
         skill: "MATCH_QUANTITY",
@@ -197,7 +197,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
         counts: [2, 3, 5, 6, 8],
       },
       {
-        title: "Counting Objects",
+        title: "Menghitung Benda",
         description: "Menghitung berbagai benda sehari-hari.",
         activityType: "COUNT_SELECT",
         skill: "COUNT_1_10",
@@ -206,7 +206,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
         counts: [3, 4, 6, 8, 10],
       },
       {
-        title: "Let's Count",
+        title: "Ayo Berhitung",
         description: "Latihan berhitung dengan tema kendaraan.",
         activityType: "COUNT_SELECT",
         skill: "COUNT_1_10",
@@ -215,7 +215,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
         counts: [1, 2, 4, 6, 9],
       },
       {
-        title: "Fish in the Jar",
+        title: "Ikan dalam Toples",
         description: "Menghitung ikan di dalam toples.",
         activityType: "COUNT_SELECT",
         skill: "COUNT_1_10",
@@ -229,7 +229,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
     title: "Tantangan Berhitung",
     lessons: [
       {
-        title: "How Many?",
+        title: "Ada Berapa?",
         description: "Tantangan menghitung jumlah yang lebih besar.",
         activityType: "COUNT_SELECT",
         skill: "COUNT_1_20",
@@ -238,7 +238,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
         counts: [8, 11, 14, 17, 20],
       },
       {
-        title: "Dinosaur Counting",
+        title: "Menghitung Dinosaurus",
         description: "Menghitung dinosaurus dengan tema seru.",
         activityType: "COUNT_SELECT",
         skill: "COUNT_1_20",
@@ -247,7 +247,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
         counts: [6, 10, 13, 16, 19],
       },
       {
-        title: "Number Recognition",
+        title: "Mengenal Angka",
         description: "Mengenali angka dan mencocokkan dengan jumlah benda.",
         activityType: "NUMBER_RECOGNITION",
         skill: "NUMBER_RECOGNITION_1_10",
@@ -256,7 +256,7 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
         counts: [2, 4, 5, 7, 9],
       },
       {
-        title: "Extra Counting Practice",
+        title: "Latihan Berhitung Tambahan",
         description: "Latihan tambahan untuk memperkuat semua keterampilan berhitung.",
         activityType: "COUNT_SELECT",
         skill: "VISUAL_COUNTING",
@@ -279,12 +279,12 @@ const moduleDefs: { title: string; lessons: LessonDef[] }[] = [
 ];
 
 const badgeDefs = [
-  { code: "FIRST_LESSON", name: "First Lesson", description: "Menyelesaikan pelajaran pertama." },
-  { code: "COUNTING_STARTER", name: "Counting Starter", description: "Memulai perjalanan belajar berhitung." },
-  { code: "FIVE_LESSONS", name: "5 Lessons Complete", description: "Menyelesaikan 5 pelajaran." },
-  { code: "COUNTING_CHAMPION", name: "Counting Champion", description: "Menyelesaikan seluruh kursus Counting Fundamentals." },
-  { code: "PERFECT_LESSON", name: "Perfect Lesson", description: "Menjawab semua soal dengan benar dalam satu pelajaran." },
-  { code: "SEVEN_DAY_STREAK", name: "7 Day Streak", description: "Belajar 7 hari berturut-turut." },
+  { code: "FIRST_LESSON", name: "Pelajaran Pertama", description: "Menyelesaikan pelajaran pertama." },
+  { code: "COUNTING_STARTER", name: "Pemula Berhitung", description: "Memulai perjalanan belajar berhitung." },
+  { code: "FIVE_LESSONS", name: "5 Pelajaran Selesai", description: "Menyelesaikan 5 pelajaran." },
+  { code: "COUNTING_CHAMPION", name: "Juara Berhitung", description: "Menyelesaikan seluruh kursus Dasar Berhitung." },
+  { code: "PERFECT_LESSON", name: "Pelajaran Sempurna", description: "Menjawab semua soal dengan benar dalam satu pelajaran." },
+  { code: "SEVEN_DAY_STREAK", name: "Streak 7 Hari", description: "Belajar 7 hari berturut-turut." },
 ];
 
 const PUBLISHED: ContentStatus = "PUBLISHED";
@@ -346,10 +346,10 @@ async function main() {
 
   const course = await db.course.upsert({
     where: { slug: "counting-fundamentals" },
-    update: { title: "Counting Fundamentals", status: PUBLISHED },
+    update: { title: "Dasar Berhitung", status: PUBLISHED },
     create: {
       slug: "counting-fundamentals",
-      title: "Counting Fundamentals",
+      title: "Dasar Berhitung",
       description: "Kursus dasar berhitung untuk anak usia dini.",
       status: PUBLISHED,
     },
