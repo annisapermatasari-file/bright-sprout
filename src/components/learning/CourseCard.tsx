@@ -1,27 +1,33 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-const QUEST_STYLES = [
-  { tone: "coral", icon: "✦", label: "AWAL CERIA" },
-  { tone: "purple", icon: "◒", label: "HUTAN ANGKA" },
-  { tone: "teal", icon: "✳", label: "TELUK POLA" },
-  { tone: "yellow", icon: "◆", label: "JEJAK BINTANG" },
-] as const;
+// Icon/tone genuinely tied to the subject (not a decorative rotation) —
+// closer to how reference apps like LogicLike give each category tile its
+// own instantly-recognizable picture (pyramids for Countries, watermelons
+// for Numbers, etc).
+const SUBJECT_STYLES: Record<string, { tone: string; icon: string; label: string }> = {
+  MATH: { tone: "coral", icon: "🔢", label: "MATEMATIKA" },
+  SCIENCE: { tone: "teal", icon: "🔬", label: "SAINS" },
+  LANGUAGE: { tone: "purple", icon: "🗣️", label: "BAHASA INGGRIS" },
+};
+const FALLBACK_STYLE = { tone: "yellow", icon: "✦", label: "PETUALANGAN" };
 
 export function CourseCard({
   course,
   isEnrolled,
   index = 0,
 }: {
-  course: { id: string; title: string; description: string | null };
+  course: { id: string; title: string; description: string | null; subject?: string };
   isEnrolled: boolean;
   index?: number;
 }) {
-  const style = QUEST_STYLES[index % QUEST_STYLES.length];
+  const style = (course.subject && SUBJECT_STYLES[course.subject]) || FALLBACK_STYLE;
 
   return (
     <article className={cn("quest-card", `quest-${style.tone}`)}>
-      <div className="quest-card-top"><span className="quest-label">{style.label}</span><span className="quest-icon" aria-hidden>{style.icon}</span></div>
+      <span className="quest-mascot" aria-hidden style={{ animationDelay: `${index * 0.4}s` }}>🌱</span>
+      <div className="quest-card-top"><span className="quest-label">{style.label}</span></div>
+      <div className="quest-card-icon" aria-hidden>{style.icon}</div>
       <div className="quest-card-body">
         <h2>{course.title}</h2>
         <p>{course.description ?? "Petualangan kecil penuh tantangan seru."}</p>
