@@ -25,12 +25,33 @@ export function OptionChoiceActivity({ question, answerState, onSelect, disabled
   const sequenceValues = visualText?.startsWith("URUTAN:")
     ? visualText.slice("URUTAN:".length).split(",")
     : null;
+  // Sains and Bahasa Inggris questions have no emoji/number visual of their
+  // own (see prisma/seed.ts's seedSimpleCourse) — a themed icon header
+  // gives them a visual anchor instead of jumping straight to plain text.
+  const subjectTheme =
+    question.skill === "SCIENCE_BASICS"
+      ? { icon: "🔬", label: "SAINS", className: "question-visual-science" }
+      : question.skill === "VOCABULARY_EN"
+        ? { icon: "🗣️", label: "KOSA KATA", className: "question-visual-language" }
+        : null;
 
   return (
     <div className="flex flex-col items-center gap-8">
-      {question.imageUrl || visualText ? (
-        <div className="question-visual flex min-h-36 w-full items-center justify-center rounded-3xl border-2 border-accent/60 bg-accent/10 p-5 text-center">
-          {sequenceValues ? (
+      {question.imageUrl || visualText || subjectTheme ? (
+        <div
+          className={cn(
+            "question-visual flex min-h-36 w-full flex-col items-center justify-center gap-2 rounded-3xl border-2 border-accent/60 bg-accent/10 p-5 text-center",
+            subjectTheme?.className,
+          )}
+        >
+          {subjectTheme && !question.imageUrl && !visualText ? (
+            <>
+              <span className="subject-theme-label">{subjectTheme.label}</span>
+              <span className="question-emoji subject-theme-icon text-6xl leading-none" aria-hidden>
+                {subjectTheme.icon}
+              </span>
+            </>
+          ) : sequenceValues ? (
             <div className="sequence-track" aria-label="Urutan angka">
               {sequenceValues.map((value, index) => (
                 <span

@@ -95,6 +95,16 @@ function matchAmountQuestion(
   };
 }
 
+/** COUNT_INPUT: option id/label IS the numeral itself, matching the fixed 0-10 keypad UI. */
+function countInputQuestion(emoji: string, count: number, skill: Skill) {
+  return {
+    skill,
+    prompt: `${emoji.repeat(count)}\nAda berapa banyak?`,
+    options: [{ id: String(count), label: String(count) }],
+    correctAnswer: { optionId: String(count) },
+  };
+}
+
 /** DRAG_MATCH: same shape as countSelectQuestion, phrased as a drag instruction. */
 function dragMatchQuestion(seedIndex: number, emoji: string, count: number, max: number, skill: Skill) {
   const { options, correctOptionId } = buildOptions(
@@ -678,7 +688,9 @@ async function main() {
                 ? dragMatchQuestion(globalQuestionIndex, lessonDef.emoji, count, lessonDef.max, lessonDef.skill)
                 : lessonDef.activityType === "TRACE_NUMBER"
                   ? traceNumberQuestion(count, lessonDef.skill)
-                  : countSelectQuestion(globalQuestionIndex, lessonDef.emoji, count, lessonDef.max, lessonDef.skill);
+                  : lessonDef.activityType === "COUNT_INPUT"
+                    ? countInputQuestion(lessonDef.emoji, count, lessonDef.skill)
+                    : countSelectQuestion(globalQuestionIndex, lessonDef.emoji, count, lessonDef.max, lessonDef.skill);
         globalQuestionIndex++;
 
         await db.question.upsert({
