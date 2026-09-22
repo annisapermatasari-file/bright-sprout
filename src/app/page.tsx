@@ -25,7 +25,7 @@ export default async function HomePage() {
       <header className="site-header">
         <Link href="/" className="brand" aria-label="BrightSprout home"><span className="brand-mark">✦</span><span>Bright<span>Sprout</span></span></Link>
         <nav aria-label="Navigasi utama"><Link href="#how-it-works">Cara kerja</Link><Link href="#grown-ups">Untuk orang tua</Link><Link href="#faq">FAQ</Link></nav>
-        <div className="header-actions">{session?.user ? <Link href="/parent" className="text-link">Dasbor</Link> : <><Link href="/login" className="text-link">Masuk</Link><Link href="/register" className="button button-small">Daftar gratis<span>↗</span></Link></>}{session?.user ? <Link href={primaryHref} className="button button-small">Main sekarang<span>↗</span></Link> : null}</div>
+        <div className="header-actions">{session?.user ? <Link href="/parent" className="text-link">Dasbor</Link> : <><Link href="/login" className="text-link">Masuk</Link><Link href="/register" className="button button-small">Coba sekarang<span>↗</span></Link></>}{session?.user ? <Link href={primaryHref} className="button button-small">Main sekarang<span>↗</span></Link> : null}</div>
       </header>
 
       <main id="main-content">
