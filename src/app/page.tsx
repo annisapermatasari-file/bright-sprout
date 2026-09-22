@@ -34,7 +34,20 @@ export default async function HomePage() {
             <div className="kicker"><span className="kicker-star">✦</span> Belajar yang terasa seperti petualangan kecil</div>
             <h1>Belajar angka.<br /><em>Tanpa drama.</em></h1>
             <p className="hero-subtitle">BrightSprout memberi anak soal pendek yang terasa seperti permainan. Orang tua bisa melihat apa yang sudah dicoba dan apa yang perlu diulang.</p>
-            <div className="hero-actions"><Link href={primaryHref} className="button button-primary">{primaryLabel}<span>↗</span></Link><Link href="#how-it-works" className="button button-quiet">Lihat cara kerja <span>↓</span></Link></div><Link href="/checkout" className="package-link">Paket Keluarga · Rp100.000 <span>Checkout simulasi ↗</span></Link>
+            <div className="hero-actions"><Link href={primaryHref} className="button button-primary">{primaryLabel}<span>↗</span></Link><Link href="#how-it-works" className="button button-quiet">Lihat cara kerja <span>↓</span></Link></div>
+            <div className="hero-pricing">
+              <Link href="/checkout" className="hero-pricing-card">
+                <span className="hero-pricing-name">Paket Anak</span>
+                <strong className="hero-pricing-amount">Rp35.000</strong>
+                <span className="hero-pricing-desc">Untuk 1 anak</span>
+              </Link>
+              <Link href="/checkout" className="hero-pricing-card featured">
+                <span className="hero-pricing-badge">Paling laris</span>
+                <span className="hero-pricing-name">Paket Keluarga</span>
+                <strong className="hero-pricing-amount">Rp100.000</strong>
+                <span className="hero-pricing-desc">Untuk keluarga · 2 anak</span>
+              </Link>
+            </div>
             <div className="trust-row"><div className="mini-avatars"><span>🧒</span><span>👧</span><span>🧑</span></div><span>Dipakai oleh keluarga yang suka belajar</span><span className="trust-stars">★★★★★</span></div>
           </div>
           <div className="hero-visual"><div className="hero-orbit orbit-one" /><div className="hero-orbit orbit-two" /><div className="hero-blob"><div className="sun-face"><span className="eye left" /><span className="eye right" /><span className="smile" /></div><span className="blob-leaf leaf-one">✦</span><span className="blob-leaf leaf-two">✳</span></div><div className="floating-note note-one"><span>✦</span><b>+10 XP</b><small>Hebat!</small></div><div className="floating-note note-two"><span>🔥</span><b>Streak 3 hari</b><small>Lanjutkan!</small></div><div className="floating-note note-three"><span>☼</span><b>Level 3</b><small>Pemikir cerah</small></div></div>
